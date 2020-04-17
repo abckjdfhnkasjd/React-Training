@@ -14,12 +14,12 @@ class CustomerList extends React.Component{
 
     
     filterCustomer = (event) => {
-        let searchTest = event.target.value
+        let searchText = event.target.value
         let tempList = (this.state.tempCustomerList.length === 0) ? this.state.customerList : this.state.tempCustomerList;
         let filteredCustomer = tempList.filter((customer) => {
-            return customer.address === searchTest;
+            return (customer.name.startsWith(searchText) || customer.address === searchText);
         });
-        if(searchTest.length === 0){
+        if(searchText.length === 0){
             filteredCustomer = tempList;
         }
         this.setState({
@@ -32,9 +32,7 @@ class CustomerList extends React.Component{
         let customers = this.state.customerList.map((customer, index) => <Customer customer = {customer} key={index}/>);
         return (
             <div>
-                <input type="text" 
-                    placeholder="search by country"
-                    onChange={this.filterCustomer}/><hr/>
+                <input type="text" placeholder="search by customer name or country" onChange={this.filterCustomer} title="search by customer name or country"/><hr/>
                 <h2>Available Customer:</h2>
                 {customers}
             </div>
