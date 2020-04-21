@@ -20,17 +20,17 @@ class Container extends React.Component {
     }
 
     pageContent = () => {
+        let error;
         if(this.state.currentUser !== ''){
             console.log(this.state.currentUser);
             return <Redirect to='/admin' />;
         }else if(this.props.match.params.action === 'register'){
             return <Register/>;
-        }else if(this.props.match.params.action === 'login'){
-            return <Login login= {this.handelLogin.bind(this)}/>;
-        }else if(this.state.invalidUserFlag){
-            return (<div><div className="alert alert-danger">Invalid Credentials</div><Login login= {this.handelLogin.bind(this)}/></div>);
-        }else{
-            return <Login login= {this.handelLogin.bind(this)}/>;
+        }else if(this.props.match.params.action === 'login' || this.props.match.params.action === undefined){
+            if(this.state.invalidUserFlag){
+                error = <div className="alert alert-danger">Invalid Credentials</div>
+            }
+            return <div>{error}<Login login= {this.handelLogin.bind(this)}/></div>;
         }
     }
 
