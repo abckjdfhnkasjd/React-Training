@@ -15,17 +15,22 @@ class Container extends React.Component {
                 }
             ],
             currentUser: '',
-            invalidUserFlag : false
+            invalidUserFlag : false,
+            userRegistrationSuccess: false
         }
     }
 
     pageContent = () => {
         let error;
+        let success;
         if(this.state.currentUser !== ''){
             console.log(this.state.currentUser);
             return <Redirect to='/admin' />;
         }else if(this.props.match.params.action === 'register'){
-            return <Register/>;
+            if(this.state.userRegistrationSuccess){
+                success = <div className="alert alert-success">Registration Successfull</div>
+            }
+            return <div>{success}<Register registration={this.handelRegistration.bind(this)}/></div>;
         }else if(this.props.match.params.action === 'login' || this.props.match.params.action === undefined){
             if(this.state.invalidUserFlag){
                 error = <div className="alert alert-danger">Invalid Credentials</div>
@@ -34,16 +39,25 @@ class Container extends React.Component {
         }
     }
 
+    handelRegistration = (username,email, password) => {
+        const newuser = {
+            username: username,
+            email: email, 
+            password: password
+        }
+        const users = this.state.users;
+        users.push(newuser)
+        this.setState({
+            users: users,
+            userRegistrationSuccess: true
+        })
+    }
+
     handelLogin = (email, password) => {
         console.log('email:'+email);
         console.log('password:'+password);
+        console.log(this.state.users);
         this.state.users
-        // .filter(user => {
-        //     console.log(user.email === email && user.password === password)
-        //     if(user.email === email && user.password === password){
-        //         return true;
-        //     }
-        // })
         .map((users) => {
             this.state.users.forEach(user => {
                 if(user.email === email && user.password === password){
@@ -53,8 +67,6 @@ class Container extends React.Component {
                 }
             });
             if(this.state.currentUser === ''){
-                // console.log('user exist');
-                // return <Redirect to='/user/register' />
                 this.setState({
                     invalidUserFlag: true
                 })

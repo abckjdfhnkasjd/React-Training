@@ -2,21 +2,26 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class Register extends React.Component {
+
+    registrationHandler = (event) => {
+        event.preventDefault();
+        this.props.registration(this.username.value, this.email.value, this.password.value);
+    }
     render() {
         return (
-            <form className="form-container">
+            <form className="form-container" onSubmit={this.registrationHandler}>
                 <h1><b>Registration Form</b></h1>
                 <div className="form-group">
-                    <label for="username">User name</label>
-                    <input type="text" className="form-control" id="username"/>
+                    <label>User name</label>
+                    <input type="text" className="form-control" id="username" ref={username => this.username = username}/>
                 </div>
                 <div className="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" className="form-control" id="email"/>
+                    <label>Email address</label>
+                    <input type="email" className="form-control" id="email" ref={email => this.email = email}/>
                 </div>
                 <div className="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" className="form-control" id="password"/>
+                    <label>Password</label>
+                    <input type="password" className="form-control" id="password" ref={password => this.password = password}/>
                 </div>
                 {/* <div className="text-center">
 
