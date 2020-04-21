@@ -15,9 +15,9 @@ const RoutingComponent = () => {
   return (
     <Router>
       <Route exact path = "/" component= { Container }/>
-      <Route path = "/user/:action" component= { Container }/>
-      <Route path = "/admin" component= { Admin }/>
-      <Route path='*' exact={true} component={RouteNotFOund} />
+      <Route exact path = "/user/:action" component= { Container }/>
+      <Route exact path = "/admin" component= { Admin }/>
+      {/* <Route path='*' component={RouteNotFOund} /> */}
     </Router>
   );
 }

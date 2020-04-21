@@ -14,7 +14,8 @@ class Container extends React.Component {
                     password: '1234'
                 }
             ],
-            currentUser: ''
+            currentUser: '',
+            invalidUserFlag : false
         }
     }
 
@@ -26,8 +27,9 @@ class Container extends React.Component {
             return <Register/>;
         }else if(this.props.match.params.action === 'login'){
             return <Login login= {this.handelLogin.bind(this)}/>;
+        }else if(this.state.invalidUserFlag){
+            return (<div><div className="alert alert-danger">Invalid Credentials</div><Login login= {this.handelLogin.bind(this)}/></div>);
         }else{
-            console.log(this.state.currentUser);
             return <Login login= {this.handelLogin.bind(this)}/>;
         }
     }
@@ -35,21 +37,26 @@ class Container extends React.Component {
     handelLogin = (email, password) => {
         console.log('email:'+email);
         console.log('password:'+password);
-        // this.setState({
-        //     username: email,
-        //     password: password
+        this.state.users
+        // .filter(user => {
+        //     console.log(user.email === email && user.password === password)
+        //     if(user.email === email && user.password === password){
+        //         return true;
+        //     }
         // })
-        this.state.users.filter(user => {
-            console.log(user.email === email && user.password === password)
-            if(user.email === email && user.password === password){
-                return true;
-            }
-        }).map((user) => {
-            if(user !== null){
+        .map((users) => {
+            this.state.users.forEach(user => {
+                if(user.email === email && user.password === password){
+                    this.setState({
+                        currentUser: user
+                    })
+                }
+            });
+            if(this.state.currentUser === ''){
                 // console.log('user exist');
                 // return <Redirect to='/user/register' />
                 this.setState({
-                    currentUser: user
+                    invalidUserFlag: true
                 })
             }
         }); 
