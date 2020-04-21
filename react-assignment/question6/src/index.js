@@ -7,15 +7,17 @@ import Container from './container';
 import Login from './login';
 import Register from './register';
 import {BrowserRouter as Router, Route } from 'react-router-dom';
+import Admin from './Admin';
+import RouteNotFOund from './RouteNotFound';
 
 
 const RoutingComponent = () => {
   return (
     <Router>
-      {/* <Links /> */}
       <Route exact path = "/" component= { Container }/>
       <Route path = "/user/:action" component= { Container }/>
-      {/* <Route path = "/user/login" component= { Login }/> */}
+      <Route path = "/admin" component= { Admin }/>
+      <Route path='*' exact={true} component={RouteNotFOund} />
     </Router>
   );
 }
