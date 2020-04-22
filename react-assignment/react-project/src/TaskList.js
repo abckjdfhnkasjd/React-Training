@@ -67,10 +67,10 @@ class TaskList extends React.Component{
         let {taskList} = this.state;
         let task = taskList[index];
         task.completed = isChekced;
+        task.status="Completed";
         this.setState({
             taskList
         })
-        console.log(this.state.taskList);
     }
 
     render() {
@@ -97,7 +97,7 @@ class TaskList extends React.Component{
                     <div className="panel panel-default">
                         <div className="panel-heading">
                             <p> 
-                                <a onClick={(event) => { event.preventDefault();this.renderTaskList('All')}}>
+                                <a onClick={(event) => { event.preventDefault();this.renderTaskList('All')}} >
                                     All</a> | <a onClick={(event) => { event.preventDefault();this.renderTaskList('Completed')}}>
                                         Completed</a> | <a onClick={(event) => { event.preventDefault();this.renderTaskList('Active')}}>
                                             Active</a>

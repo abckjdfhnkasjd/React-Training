@@ -20,7 +20,6 @@ class Task extends React.Component {
         event.preventDefault();
         this.props.editTask(this.props.index, this.input.value);
         this.toggleTask();
-        console.log(this.input.value);
     }
 
     renderForm = () => {
@@ -43,12 +42,11 @@ class Task extends React.Component {
           };
         return (
             <li
-                className={this.props.task.completed? 'list-group-item list-group-item': 'list-group-item'}>
+                className={this.props.task.completed? 'list-group-item completed': 'list-group-item'}>
                     <input 
-                        // checked = {this.props.task.completed ? 'checked': ''}
+                        checked = {this.props.task.completed ? 'checked': ''}
                         type="checkbox" 
-                        // onChange={(event) => {event.stopPropagation();this.props.taskCompleted(this.props.index)}}
-                        onChange={e => {this.props.taskCompleted(e.target.checked, this.props.index);}}
+                        onChange={(event) => {this.props.taskCompleted(event.target.checked, this.props.index)}}
                         />
                     {this.props.task.name}
                     <button 
