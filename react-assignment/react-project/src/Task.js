@@ -2,12 +2,19 @@ import React from 'react';
 import './App.css'
 
 const Task = (props) => {
+    const classes = ['list-group-item'];
+    {
+        props.task.completed? classes.push('completed'): classes.push('');
+    }
+
     return (
         <li 
-            className={props.task.completed ? 'list-group-item completed': 'list-group-item '}>
+            className={classes.join(' ')}>
                 <input type="checkbox" checked = {props.task.completed ? 'checked': ''}/>
-                {props.task.name}{props.task.status}
-                <button className="btn btn-info glyphicon glyphicon-trash pull-right"></button>
+                {props.task.name}
+                <button 
+                    className="btn btn-info glyphicon glyphicon-trash pull-right" 
+                    onClick={(event) => {event.stopPropagation();props.deleteTask(props.index)}}></button>
         </li>
     );
 }

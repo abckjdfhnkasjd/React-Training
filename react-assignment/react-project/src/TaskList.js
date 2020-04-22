@@ -12,9 +12,20 @@ class TaskList extends React.Component{
             ]
         }
     }
+
+    deleteTaskHandler = (index) => {
+        console.log('index:'+ index);
+        const taskList = this.state.taskList;
+        taskList.splice(index, 1);
+        this.setState({
+            taskList
+        })
+        console.log('task:'+ this.state.taskList);
+    }
+    
     render() {
         let taskArray = this.state.taskList.map((task, index) => {
-            return <Task task={task} key = {index}/>
+            return <Task task={task} index= {index} key = {index} deleteTask = {this.deleteTaskHandler.bind(this)}/>
         })
         return (
             <div className="row">
