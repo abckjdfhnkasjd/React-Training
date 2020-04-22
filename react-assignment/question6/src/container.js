@@ -54,9 +54,6 @@ class Container extends React.Component {
     }
 
     handelLogin = (email, password) => {
-        console.log('email:'+email);
-        console.log('password:'+password);
-        console.log(this.state.users);
         this.state.users
         .map((users) => {
             this.state.users.forEach(user => {
