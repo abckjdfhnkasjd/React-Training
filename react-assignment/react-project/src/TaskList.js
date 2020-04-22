@@ -37,18 +37,44 @@ class TaskList extends React.Component{
         })
     }
 
+    addTask = () => {
+        let taskText = this.newtask.value
+        const newTask = {
+            name: taskText,
+            status: 'Active',
+            completed: false
+
+        }
+        const taskList = this.state.taskList;
+        taskList.push(newTask);
+        this.setState({
+            taskList
+        })
+    }
+
+    editTask = (index, newTask) => {
+        var {taskList} = this.state;
+        var task = taskList[index];
+        task.name = newTask;
+        this.setState({
+            taskList 
+        })
+    }
+
     render() {
         let taskArray = this.state.taskList.map((task, index) => {
-            return <Task task={task} index= {index} key = {index} deleteTask = {this.deleteTaskHandler.bind(this)}/>
+            return <Task task={task} index= {index} key = {index} 
+                        deleteTask = {this.deleteTaskHandler.bind(this)}
+                        editTask = {this.editTask.bind(this)}/>
         })
         return (
             <div>
             <div className="row text-center">
                 <div className="col-xs-12">
                 <div className="input-group">
-                    <input className="form-control" placeholder="Add todo ..."/>
+                    <input className="form-control" placeholder="Add todo ..." ref={(newtask) => {this.newtask = newtask}}/>
                     <span className="input-group-btn">
-                        <button className="btn btn-info">Submit</button>
+                        <button className="btn btn-info" onClick= {this.addTask}>Submit</button>
                     </span>
                 </div>
                 </div>
