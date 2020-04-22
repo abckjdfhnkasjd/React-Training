@@ -39,10 +39,17 @@ class Task extends React.Component {
     }
 
     renderTask = () => {
+        var inputProps = {
+          };
         return (
             <li
                 className={this.props.task.completed? 'list-group-item list-group-item': 'list-group-item'}>
-                    <input type="checkbox" checked = {this.props.task.completed ? 'checked': ''}/>
+                    <input 
+                        // checked = {this.props.task.completed ? 'checked': ''}
+                        type="checkbox" 
+                        // onChange={(event) => {event.stopPropagation();this.props.taskCompleted(this.props.index)}}
+                        onChange={e => {this.props.taskCompleted(e.target.checked, this.props.index);}}
+                        />
                     {this.props.task.name}
                     <button 
                         className="btn btn-info glyphicon glyphicon-trash pull-right" 
@@ -57,18 +64,6 @@ class Task extends React.Component {
     render(){
         const editMode = this.state.editMode;
         return (
-            // <li
-            //     className={this.props.task.completed? 'list-group-item list-group-item': 'list-group-item'}>
-            //         <input type="checkbox" checked = {this.props.task.completed ? 'checked': ''}/>
-            //         {this.props.task.name}
-            //         <button 
-            //             className="btn btn-info glyphicon glyphicon-trash pull-right" 
-            //             onClick={(event) => {event.stopPropagation();this.props.deleteTask(this.props.index)}}></button>
-            //         <button 
-            //             className="btn btn-info glyphicon glyphicon-pencil pull-right" 
-            //             onClick={(event) => {event.stopPropagation();this.toggleTask()}}></button>
-            // </li>
-            
             <section>
                 {
                     editMode ? this.renderForm() : this.renderTask()

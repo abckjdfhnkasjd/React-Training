@@ -61,11 +61,24 @@ class TaskList extends React.Component{
         })
     }
 
+    
+    taskCompleted = (isChekced, index) => {
+        console.log(isChekced, index);
+        let {taskList} = this.state;
+        let task = taskList[index];
+        task.completed = isChekced;
+        this.setState({
+            taskList
+        })
+        console.log(this.state.taskList);
+    }
+
     render() {
         let taskArray = this.state.taskList.map((task, index) => {
             return <Task task={task} index= {index} key = {index} 
                         deleteTask = {this.deleteTaskHandler.bind(this)}
-                        editTask = {this.editTask.bind(this)}/>
+                        editTask = {this.editTask.bind(this)}
+                        taskCompleted = {this.taskCompleted.bind(this)}/>
         })
         return (
             <div>
@@ -95,7 +108,6 @@ class TaskList extends React.Component{
                                 {taskArray}
                             </ul>
                         </div>
-                        {/* <div class="panel-footer">Panel Footer</div> */}
                     </div>
                 </div>
             </div>
