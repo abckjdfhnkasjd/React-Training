@@ -42,10 +42,21 @@ class TaskList extends React.Component{
             return <Task task={task} index= {index} key = {index} deleteTask = {this.deleteTaskHandler.bind(this)}/>
         })
         return (
+            <div>
+            <div className="row text-center">
+                <div className="col-xs-12">
+                <div className="input-group">
+                    <input className="form-control" placeholder="Add todo ..."/>
+                    <span className="input-group-btn">
+                        <button className="btn btn-info">Submit</button>
+                    </span>
+                </div>
+                </div>
+            </div><br/><br/>
             <div className="row">
                 <div className="col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
+                    <div className="panel panel-default">
+                        <div className="panel-heading">
                             <p> 
                                 <a onClick={(event) => { event.preventDefault();this.renderTaskList('All')}}>
                                     All</a> | <a onClick={(event) => { event.preventDefault();this.renderTaskList('Completed')}}>
@@ -53,7 +64,7 @@ class TaskList extends React.Component{
                                             Active</a>
                             </p>
                         </div>
-                        <div class="panel-body">
+                        <div className="panel-body">
                             <ul className="list-group">
                                 {taskArray}
                             </ul>
@@ -61,6 +72,7 @@ class TaskList extends React.Component{
                         {/* <div class="panel-footer">Panel Footer</div> */}
                     </div>
                 </div>
+            </div>
             </div>
         );
     }

@@ -1,6 +1,9 @@
 
 import React from 'react';
-import { white, black } from 'color-name';
+import TaskList from './TaskList';
+import {BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import AboutComponent from './AboutComponent';
+
 
 class HomeComponent extends React.Component{
     render() {
@@ -13,11 +16,13 @@ class HomeComponent extends React.Component{
                 <div className="row text-center" style={style}>
                     <div className="col-xs-12">
                         <h1>TodoList</h1>
-                        <a href="#">Home</a> | <a href="#">About</a>
+                        {/* <a href="#">Home</a> | <a href="#">About</a> */}
+                        <Link to="/admin/home">Home</Link> | <Link to="/admin/about">About</Link>
                     </div>
-                </div>
+                </div><br/>
+                {this.props.match.params.preference === 'home'? <TaskList/>: <AboutComponent/>}
                 <br/>
-                <div className="row text-center">
+                {/* <div className="row text-center">
                     <div className="col-xs-12">
                     <div className="input-group">
                         <input className="form-control" placeholder="Add todo ..."/>
@@ -26,7 +31,7 @@ class HomeComponent extends React.Component{
                         </span>
                     </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }
