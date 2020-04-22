@@ -32,7 +32,7 @@ class Task extends React.Component {
                     ref = {(value) => { this.input = value}}
                     onChange={this.props.updateTask}/>
                 <button type="submit" className="btn btn-primary">Update</button>
-                <button type="submit" className="btn btn-danger">Cancel</button>
+                <button type="button" className="btn btn-danger" onClick={this.toggleTask}>Cancel</button>
             </form>
         );
     }
