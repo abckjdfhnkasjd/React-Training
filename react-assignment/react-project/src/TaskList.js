@@ -97,10 +97,9 @@ class TaskList extends React.Component{
                     <div className="panel panel-default">
                         <div className="panel-heading">
                             <p> 
-                                <a onClick={(event) => { event.preventDefault();this.renderTaskList('All')}} >
-                                    All</a> | <a onClick={(event) => { event.preventDefault();this.renderTaskList('Completed')}}>
-                                        Completed</a> | <a onClick={(event) => { event.preventDefault();this.renderTaskList('Active')}}>
-                                            Active</a>
+                                <a onClick={(event) => { event.preventDefault();this.renderTaskList('All')}} >All</a>|
+                                <a onClick={(event) => { event.preventDefault();this.renderTaskList('Completed')}}>Completed</a>|
+                                <a onClick={(event) => { event.preventDefault();this.renderTaskList('Active')}}>Active</a>
                             </p>
                         </div>
                         <div className="panel-body">

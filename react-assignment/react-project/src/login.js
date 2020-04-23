@@ -5,9 +5,6 @@ class Login extends React.Component {
 
     loginHandler = (event) => {
         event.preventDefault();
-        // console.log(this.input.password);
-        // console.log(this.email.value);
-        // console.log(this.password.value);
         this.props.login(this.email.value, this.password.value);
     }
 

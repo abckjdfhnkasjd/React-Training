@@ -9,14 +9,12 @@ class Container extends React.Component {
         this.state = {
             users:[
                 {
-                    username: 'gsprevolution.it@gmail.com',
-                    email: 'gsprevolution.it@gmail.com', 
-                    password: '1234'
+                    //no user for login. do registration
                 }
             ],
             currentUser: '',
-            invalidUserFlag : false,
-            userRegistrationSuccess: false
+            invalidUser : false,
+            registrationSuccess: false
         }
     }
 
@@ -24,15 +22,16 @@ class Container extends React.Component {
         let error;
         let success;
         if(this.state.currentUser !== ''){
-            console.log(this.state.currentUser);
             return <Redirect to='/admin/home' />;
         }else if(this.props.match.params.action === 'register'){
-            if(this.state.userRegistrationSuccess){
+            // this.setState({invalidUserFlag: false});
+            if(this.state.registrationSuccess){
                 success = <div className="alert alert-success">Registration Successfull</div>
             }
             return <div>{success}<Register registration={this.handelRegistration.bind(this)}/></div>;
         }else if(this.props.match.params.action === 'login' || this.props.match.params.action === undefined){
-            if(this.state.invalidUserFlag){
+            // this.setState({registrationSuccess: false});
+            if(this.state.invalidUser){
                 error = <div className="alert alert-danger">Invalid Credentials</div>
             }
             return <div>{error}<Login login= {this.handelLogin.bind(this)}/></div>;
@@ -48,41 +47,24 @@ class Container extends React.Component {
         const users = this.state.users;
         users.push(newuser)
         this.setState({
-            users: users,
-            userRegistrationSuccess: true
+            users,
+            registrationSuccess: true
         })
     }
 
     handelLogin = (email, password) => {
-        this.state.users
-        .map((users) => {
-            this.state.users.forEach(user => {
-                if(user.email === email && user.password === password){
-                    this.setState({
-                        currentUser: user
-                    })
-                }
-            });
-            if(this.state.currentUser === ''){
-                this.setState({
-                    invalidUserFlag: true
-                })
-            }
-        }); 
+        let loggedinUser = this.state.users.filter((user) => {
+            return (user.email === email && user.password === password);
+        });
+        (loggedinUser.length === 0)? this.setState({invalidUser: true}): this.setState({currentUser: loggedinUser}); 
     }
 
     render() {
         return (
-            <div className="row justify-content-center">
-                <div className="col-md-4 col-sm-12 col-xs-12"></div>
-                <div className="col-md-4 col-sm-12 col-xs-12">
+            <div className="row">
+                <div className="col-md-4 col-md-offset-4 col-sm-12 col-xs-12">
                     {this.pageContent()}
-                    {/* {
-                        (this.state.currentUser !== '') 
-                        ? <Redirect to='/user/admin' /> 
-                        : ((this.props.match.params.action === 'register')? <Register/> : <Login login= {this.handelLogin.bind(this)}/>)} */}
                 </div>
-                <div className="col-md-4 col-sm-12 col-xs-12"></div>
             </div>
         );
     }    
