@@ -7,11 +7,7 @@ class Container extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            users:[
-                {
-                    //no user for login. do registration
-                }
-            ],
+            users:[],
             currentUser: '',
             invalidUser : false,
             registrationSuccess: false
@@ -24,13 +20,11 @@ class Container extends React.Component {
         if(this.state.currentUser !== ''){
             return <Redirect to='/admin/home' />;
         }else if(this.props.match.params.action === 'register'){
-            // this.setState({invalidUserFlag: false});
             if(this.state.registrationSuccess){
                 success = <div className="alert alert-success">Registration Successfull</div>
             }
             return <div>{success}<Register registration={this.handelRegistration.bind(this)}/></div>;
         }else if(this.props.match.params.action === 'login' || this.props.match.params.action === undefined){
-            // this.setState({registrationSuccess: false});
             if(this.state.invalidUser){
                 error = <div className="alert alert-danger">Invalid Credentials</div>
             }
