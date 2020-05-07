@@ -6,7 +6,7 @@ import taskReducer from "./taskReducer";
 const rootReducer = combineReducers({
     errors: errorReducer,
     projects: projectreducer,
-    taskList: taskReducer
+    projectDetails: taskReducer
 })
 
 export default rootReducer;

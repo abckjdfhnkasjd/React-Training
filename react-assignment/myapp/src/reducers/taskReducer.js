@@ -1,16 +1,20 @@
 import { GET_TASKS, ADD_TASK, DELETE_TASK, GET_TASK } from "../actions/types";
 
 const initialState = {
+    project: {},
     taskList: [],
-    task: {}
+    task: {},
 }
 
 export default function (state = initialState, action) {
     switch(action.type){
-        case GET_TASKS : 
-        return {
-            ...state,
-            taskList: action.payload
+        case GET_TASKS : {
+            console.log('GET_TASKS=', action.payload.taskList)
+            return {
+                ...state,
+                project: action.payload,
+                taskList: action.payload.taskList
+            }
         }
         case ADD_TASK : 
         return {
@@ -18,23 +22,18 @@ export default function (state = initialState, action) {
             taskList: action.payload
         }
         case DELETE_TASK : {
-            let tasks = [...state.taskList.taskList];
+            let tasks = [...state.taskList];
             tasks = tasks.filter((task) => {
                 return (task.taskId !== action.payload)
             })
-            console.log('on Action=', tasks);
             let taskList = {...state.taskList};
-            taskList.taskList=tasks;
+            taskList=tasks;
             return {
                 ...state,
                 taskList: taskList
             }
         }
         case GET_TASK : {
-            // let task = [...state.task];
-            // console.log('on Action=', tasks);
-            // let taskList = {...state.taskList};
-            // taskList.taskList=tasks;
             return {
                 ...state,
                 task: action.payload

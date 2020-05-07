@@ -15,7 +15,6 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
         this.props.getProjects();
     }    
 
@@ -38,7 +37,7 @@ class Dashboard extends React.Component {
                             <hr />
                             {
                                 projects.map(project => (
-                                    <ProjectItem key={project.id} project={project} delete={this.onDelete}/>
+                                    <ProjectItem key={project.projectIdentifier} project={project} delete={this.onDelete}/>
                                 ))
                             }
                             </div>
@@ -57,7 +56,6 @@ Dashboard.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-    console.log("mapStateToProps called = ",state.projects.projects);
    return {projects: state.projects.projects}
 }
 

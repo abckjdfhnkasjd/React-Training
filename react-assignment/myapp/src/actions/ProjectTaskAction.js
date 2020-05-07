@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from '../store';
 
 import { GET_TASKS, ADD_TASK, DELETE_TASK, GET_TASK } from "./types";
 
@@ -11,9 +12,10 @@ export const getProjectTasks = (id) => async (dispatch) => {
     })
 }
 
-export const addOrUpdateTask = (projectId, task, history) => async (dispatch) => {
-    const response = await axios.post(`http://localhost:8080/project/${projectId}/task`, task);
-    history.push(`/projectBoard/${projectId}`);
+export const addOrUpdateTask = (task, history) => async (dispatch) => {
+    const project = store.getState().projectDetails.project;
+    const response = await axios.post(`http://localhost:8080/project/${project.projectIdentifier}/task`, task);
+    history.push(`/projectBoard/${project.projectIdentifier}`);
     dispatch({
         type: ADD_TASK,
         payload: response.data

@@ -34,7 +34,7 @@ const Task = (props) => {
                         {props.task.summary}
                     </div>
                     <div>
-                        <Link to={`/projectTaskForm/project/${props.projectId}/task/${props.task.taskId}`}
+                        <Link to={`/projectTaskForm/task/${props.task.taskId}`}
                                 className="btn btn-sm btn-info">
                             View/update
                         </Link>

@@ -3,14 +3,14 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { getProjectTasks, addOrUpdateTask, getTask } from '../../actions/ProjectTaskAction';
+import { addOrUpdateTask, getTask } from '../../actions/ProjectTaskAction';
 
 class ProjectTaskForm extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            project:    {
+            project:{
                         projectIdentifier: '',
                         projectName: '',
                         description:'',
@@ -36,8 +36,7 @@ class ProjectTaskForm extends React.Component {
                 dueDate: '',
                 createdDate: new Date(),
                 updatedDate: new Date()
-            },
-            projectId: ''
+            }
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -46,37 +45,40 @@ class ProjectTaskForm extends React.Component {
 
     componentWillReceiveProps(nextProps){
         console.log("nextProps=",nextProps);
-        if(nextProps.taskList){
-            const  project = nextProps.taskList.taskList;
+        if(nextProps.task){
+            // const  project = nextProps.taskList.taskList;
             this.setState({
-                project
+                task:nextProps.task
             });
         }
-        if(nextProps.taskList && nextProps.taskList.task){
-            const  {task} = nextProps.taskList;
-            this.setState({
-                task
-            });
-        }
+        // if(nextProps.taskList && nextProps.taskList.task){
+        //     const  {task} = nextProps.taskList;
+        //     this.setState({
+        //         task
+        //     });
+        // }
     }
 
     componentDidMount() {
         const {action} = this.props.match.params;
-        const {projectId} = this.props.match.params;
-        this.setState({projectId: projectId})
-        console.log(this.state);
+        const {actionId} = this.props.match.params;
+        // this.setState({projectId: projectId})
+        // console.log(this.state);
+        // if(action === 'task'){
+        //     const {taskId} = this.props.match.params;
+        //     this.props.getTask(taskId);
+        // }else{
+            // }
         if(action === 'task'){
-            const {taskId} = this.props.match.params;
-            this.props.getTask(taskId);
-        }else{
-            this.props.getProjectTasks(projectId);
+            this.props.getTask(actionId);
         }
     }
 
     onSubmit(event) {
         event.preventDefault();
         const {task} = this.state;
-        this.props.addOrUpdateTask(this.state.project.projectIdentifier, task, this.props.history);
+        console.log(task);
+        this.props.addOrUpdateTask(task, this.props.history);
     }
 
     onChange(event) {
@@ -93,7 +95,7 @@ class ProjectTaskForm extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                        <Link to ={`/projectBoard/${this.props.match.params.id}`} class="btn btn-primary">Back to Project Board</Link>
+                        <Link to ={`/projectBoard/${this.props.match.params.id}`} className="btn btn-primary">Back to Project Board</Link>
                         <br />
                             <h5 className="display-4 text-center">Add / Update Project Task</h5>
                             <hr />
@@ -166,7 +168,7 @@ class ProjectTaskForm extends React.Component {
                                     className="form-control form-control-lg" >
                                        <option>To Do</option>
                                        <option>In Progress</option>
-                                       <option>Done</option>
+                                       <option>Completed</option>
                                    </select>
                                 </div>
 
@@ -183,12 +185,12 @@ class ProjectTaskForm extends React.Component {
 ProjectTaskForm.propTypes = {
     // addProject: PropTypes.func.isRequired,
     // deleteProject: PropTypes.func.isRequired,
-    taskList: PropTypes.object.isRequired
+    task: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
     console.log(state);
-   return {taskList: state.taskList}
+   return {task: state.projectDetails.task}
 }
 
-export default connect(mapStateToProps, {getProjectTasks, addOrUpdateTask, getTask})(ProjectTaskForm);
+export default connect(mapStateToProps, {addOrUpdateTask, getTask})(ProjectTaskForm);
