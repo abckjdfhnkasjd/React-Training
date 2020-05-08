@@ -10,24 +10,6 @@ class ProjectTaskForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            project:{
-                        projectIdentifier: '',
-                        projectName: '',
-                        description:'',
-                        start_date: '',
-                        end_date: '',
-                        taskList: [
-                            {
-                                summary: '',
-                                acceptanceCriteria: '',
-                                status: '',
-                                priority: '',
-                                dueDate: '',
-                                createdDate: '',
-                                updatedDate: ''
-                            }
-                        ]
-                    },
             task: {
                 summary: '',
                 acceptanceCriteria: '',
@@ -36,39 +18,31 @@ class ProjectTaskForm extends React.Component {
                 dueDate: '',
                 createdDate: new Date(),
                 updatedDate: new Date()
-            }
+            },
+            errors: {}
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
     }
 
     componentWillReceiveProps(nextProps){
-        console.log("nextProps=",nextProps);
+        let task = nextProps.task;
+        task.dueDate = task.dueDate.split('T')[0];
         if(nextProps.task){
-            // const  project = nextProps.taskList.taskList;
             this.setState({
-                task:nextProps.task
+                task:task
             });
         }
-        // if(nextProps.taskList && nextProps.taskList.task){
-        //     const  {task} = nextProps.taskList;
-        //     this.setState({
-        //         task
-        //     });
-        // }
+        if(nextProps.errors){
+            this.setState({
+                errors:nextProps.errors
+            });
+        }
     }
 
     componentDidMount() {
         const {action} = this.props.match.params;
         const {actionId} = this.props.match.params;
-        // this.setState({projectId: projectId})
-        // console.log(this.state);
-        // if(action === 'task'){
-        //     const {taskId} = this.props.match.params;
-        //     this.props.getTask(taskId);
-        // }else{
-            // }
         if(action === 'task'){
             this.props.getTask(actionId);
         }
@@ -107,7 +81,7 @@ class ProjectTaskForm extends React.Component {
                                         value={this.state.task.summary}
                                         onChange={this.onChange}
                                         placeholder="Project Task Summary" />
-                                    {/* <p>{ errors.projectName }</p> */}
+                                    <p>{ this.state.errors.summary }</p>
                                 </div>
                                 <div className="form-group">
                                     <input type="text" 
@@ -116,17 +90,8 @@ class ProjectTaskForm extends React.Component {
                                         name="acceptanceCriteria"
                                         value={this.state.task.acceptanceCriteria}
                                         onChange={this.onChange} />
+                                    <p>{ this.state.errors.acceptanceCriteria }</p>
                                 </div>
-                                {/* <!-- disabled for Edit Only!! remove "disabled" for the Create operation --> */}
-                                {/* <div className="form-group">
-                                    <textarea className="form-control form-control-lg" 
-                                    placeholder="Project Description"
-                                    name="description"
-                                    value={this.state.description}
-                                    onChange={this.onChange}
-                                    ></textarea>
-                                    <p>{ errors.description }</p>
-                                </div> */}
                                 <h6>Due Date</h6>
                                 <div className="form-group">
                                     <input type="date" 
@@ -134,17 +99,8 @@ class ProjectTaskForm extends React.Component {
                                         name="dueDate" 
                                         value={this.state.task.dueDate}
                                         onChange={this.onChange} />
-                                    {/* <p>{ errors.start_date }</p> */}
+                                    <p>{ this.state.errors.dueDate }</p>
                                 </div>
-                                {/* <h6>Estimated End Date</h6>
-                                <div className="form-group">
-                                    <input type="date" 
-                                    className="form-control form-control-lg" 
-                                    name="end_date" 
-                                    value={this.state.end_date}
-                                    onChange={this.onChange}/>
-                                    <p>{ errors.end_date }</p>
-                                </div> */}
                                 <h6>Select Priority</h6>
                                 <div className="form-group">
                                    <select 
@@ -171,7 +127,6 @@ class ProjectTaskForm extends React.Component {
                                        <option>Completed</option>
                                    </select>
                                 </div>
-
                                 <input type="submit" className="btn btn-primary btn-block mt-4" />
                             </form>
                         </div>
@@ -190,7 +145,7 @@ ProjectTaskForm.propTypes = {
 
 const mapStateToProps = (state) => {
     console.log(state);
-   return {task: state.projectDetails.task}
+   return {task: state.projectDetails.task, errors: state.errors}
 }
 
 export default connect(mapStateToProps, {addOrUpdateTask, getTask})(ProjectTaskForm);

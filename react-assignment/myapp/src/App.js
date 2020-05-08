@@ -21,10 +21,9 @@ function App() {
             <Header/>
             <Route exact path="/" component={Dashboard}/>
             <Route path="/dashboard" component={Dashboard}/>
-            <Route path="/projectBoard/:id" component={ProjectBoard}/>
             <Route path="/addproject" component={AddProject}/>
             <Route path="/updateProject/:id" component={UpdateProject}/>
-            {/* <Route path="/projectTaskForm/project/:projectId/:action/:taskId" component={ProjectTaskForm}/> */}
+            <Route path="/projectBoard/:id" component={ProjectBoard}/>
             <Route path="/projectTaskForm/:action/:actionId" component={ProjectTaskForm}/>
           </Router>
         </div> 
